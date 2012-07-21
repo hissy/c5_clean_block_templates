@@ -1,26 +1,26 @@
 <?php
-//NOTE: For extra functionality, you can add the following page attributes (via Dashboard -> Pages and Themes -> Attributes):
+//注意: 次のページ属性を追加することで、拡張機能が利用できます（管理画面 → ページ＆テーマ → 属性）。
 //
-// 1) Handle: replace_link_with_first_in_nav
-//    Type: Checkbox
-//    Functionality: If a page has this checked, clicking on it in the nav menu will go to its first child (sub-page) instead.
+// 1) ハンドル: replace_link_with_first_in_nav
+//    タイプ: 真偽値
+//    機能: ページがチェックされているとき、ナビゲーションメニューでこのページがクリックされたとき、このページの最初の子ページ（サブページ）に代わりに移動する。
 //
-// 2) Handle: exclude_subpages_from_nav
-//    Type: Checkbox
-//    Functionality: If a page has this checked, all of that pages children (sub-pages) will be excluded from the nav menu (but the page itself will be included).
+// 2) ハンドル: exclude_subpages_from_nav
+//    タイプ: 真偽値
+//    機能: ページがチェックされているとき、すべての子ページ（サブページ）はナビゲーションメニューから除かれる（このページ自身は含まれる）。
 //
-// 3) Handle: disable_link_in_nav
-//    Type: Checkbox
-//    Functionality: If a page has this checked, it will appear in the nav menu but will not be "clickable" (will not link to any page).
+// 3) ハンドル:disable_link_in_nav
+//    タイプ: 真偽値
+//    機能: ページがチェックされているとき、ナビゲーションメニューに現れるが、クリックできない（どのページにもリンクされない）。
 //
-// 4) Handle: nav_item_class
-//    Type: Text
-//    Functionality: Whatever is entered into this textbox will be outputted as an additional CSS class for that page's nav item (NOTE: you must un-comment the "$ni->attrClass" code block in the CSS section below for this to work).
+// 4) ハンドル: nav_item_class
+//    タイプ: テキスト
+//    機能: テキストボックスに入力された内容が追加のCSSクラスとしてこのページのナビゲーション項目に出力される（注意: この機能を動作させるには、下記のCSSセクションのこのコード "$ni->attrClass" をコメントから外すこと）。
 
 
 
 /*************************************************
- * DESIGNERS: SCROLL DOWN! (IGNORE ALL THIS STUFF)
+ * デザイナーへ: スクロールダウンしてください！（この部分は無視）
  *************************************************/
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -160,74 +160,74 @@ for ($i = 0; $i < $navItemCount; $i++) {
 }
 
 /******************************************************************************
-* DESIGNERS: CUSTOMIZE THE CSS CLASSES STARTING HERE...
+* デザイナーへ: CSSクラスのカスタマイズをここで行なってください。
 */
 foreach ($navItems as $ni) {
 	$classes = array();
 	
 	if ($ni->isCurrent) {
-		//class for the page currently being viewed
+		//現在見ているページのクラス
 		$classes[] = 'nav-selected';
 	}
 	
 	if ($ni->inPath) {
-		//class for parent items of the page currently being viewed
+		//現在見ているページの親ページのクラス
 		$classes[] = 'nav-path-selected';
 	}
 	
 	/*
 	if ($ni->isFirst) {
-		//class for the first item in each menu section (first top-level item, and first item of each dropdown sub-menu)
+		//すべてのメニューセクションの最初の項目のクラス（トップレベルの最初の項目と、すべてのドロップダウン・サブメニューの最初の項目）
 		$classes[] = 'nav-first';
 	}
 	*/
 	
 	/*
 	if ($ni->isLast) {
-		//class for the last item in each menu section (last top-level item, and last item of each dropdown sub-menu)
+		//すべてのメニューセクションの最後の項目のクラス（トップレベルの最後の項目と、すべてのドロップダウン・サブメニューの最後の項目）
 		$classes[] = 'nav-last';
 	}
 	*/
 	
 	/*
 	if ($ni->hasSubmenu) {
-		//class for items that have dropdown sub-menus
+		//ドロップダウン・サブメニューを持つ項目のクラス
 		$classes[] = 'nav-dropdown';
 	}
 	*/
 	
 	/*
 	if (!empty($ni->attrClass)) {
-		//class that can be set by end-user via the 'nav_item_class' custom page attribute
+		//カスタムページ属性「nav_item_class」によってエンドユーザーから設定されるクラス
 		$classes[] = $ni->attrClass;
 	}
 	*/
 	
 	/*
 	if ($ni->isHome) {
-		//home page
+		//ホームページ
 		$classes[] = 'nav-home';
 	}
 	*/
 	
 	/*
-	//unique class for every single menu item
+	//それぞれのメニュー項目にユニークなクラスをつける
 	$classes[] = 'nav-item-' . $ni->cID;
 	*/
 	
-	//Put all classes together into one space-separated string
+	//すべてのクラスをスペース区切りの文字列につなげる
 	$ni->classes = implode(" ", $classes);
 }
 
 /******************************************************************************
-* DESIGNERS: CUSTOMIZE THE HTML STARTING HERE...
+* デザイナーへ: HTMLのカスタマイズをここで行なってください。
 */
 
-echo '<ul class="nav">'; //opens the top-level menu
+echo '<ul class="nav">'; //トップレベルメニューの開始
 
 foreach ($navItems as $ni) {
 	
-	echo '<li class="' . $ni->classes . '">'; //opens a nav item
+	echo '<li class="' . $ni->classes . '">'; //ナビゲーション項目の開始
 	
 	if ($ni->isEnabled) {
 		echo '<a href="' . $ni->url . '" target="' . $ni->target . '" class="' . $ni->classes . '">' . $ni->name . '</a>';
@@ -236,11 +236,11 @@ foreach ($navItems as $ni) {
 	}
 	
 	if ($ni->hasSubmenu) {
-		echo '<ul>'; //opens a dropdown sub-menu
+		echo '<ul>'; //ドロップダウン・サブメニューの開始
 	} else {
-		echo '</li>'; //closes a nav item
-		echo str_repeat('</ul></li>', $ni->subDepth); //closes dropdown sub-menu(s) and their top-level nav item(s)
+		echo '</li>'; //ナビゲーション項目の終了
+		echo str_repeat('</ul></li>', $ni->subDepth); //ドロップダウン・サブメニューと、それらのトップレベルメニュー項目の終了
 	}
 }
 
-echo '</ul>'; //closes the top-level menu
+echo '</ul>'; //トップレベルメニューの終了
